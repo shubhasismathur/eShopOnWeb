@@ -1,0 +1,53 @@
+{
+  "$schema": "https://raw.githubusercontent.com/azure/modernize/main/schemas/v1.0/tasks-schema.json",
+  "description": "Tasks template for modernization plan. Generate this file alongside plan.md to track individual migration tasks.",
+  "tasks": [
+    {
+      "type": "transform",
+      "id": "001-transform-sql-managed-identity",
+      "description": "Migrate the eShopOnWeb application's Entity Framework Core database contexts from password-based SQL Server connection strings to passwordless Azure SQL Database access using Azure Managed Identity.",
+      "reason": "The application currently uses password-based connection strings for both the Catalog and Identity databases. Migrating to Managed Identity eliminates stored credentials, reduces the attack surface, and aligns with Azure security best practices for cloud-hosted applications.",
+      "requirements": "Migrate both CatalogConnection and IdentityConnection in src/Infrastructure/Dependencies.cs to use Azure SQL Database with Managed Identity (passwordless) authentication. Update the Entity Framework Core configuration to use token-based authentication via DefaultAzureCredential. Ensure backward compatibility with the existing in-memory database path used for testing. Do not change the database schema or migrations.",
+      "skills": [
+        {
+          "name": "migration-azure-sql-database",
+          "location": "builtin"
+        }
+      ],
+      "successCriteria": {
+        "passBuild": "true",
+        "generateNewUnitTests": "false",
+        "passUnitTests": "true"
+      }
+    },
+    {
+      "type": "security",
+      "id": "002-security-cve-remediation",
+      "description": "Scan all project dependencies for known CVEs and remediate any identified vulnerabilities.",
+      "reason": "Ensuring the application is free of known security vulnerabilities is a mandatory step before production deployment. Dependency vulnerabilities can expose the application to known exploits that are easily preventable by upgrading to patched versions.",
+      "requirements": "Upgrade vulnerable dependencies to the minimum patched version. If a CVE fix requires a major version upgrade, document the affected dependency, the current version, the upgraded major version, and the breaking change risk. Verify that the project builds and all tests pass after remediation. Runtime environment: .NET 8.0 SDK. Build tool: dotnet CLI.",
+      "environmentConfiguration": "Runtime: .NET 8.0 SDK. Build tool: dotnet CLI.",
+      "dependencies": [
+        "001-transform-sql-managed-identity"
+      ],
+      "skills": [
+        {
+          "name": "validate-cves-and-fix",
+          "location": "builtin"
+        }
+      ],
+      "successCriteria": {
+        "passBuild": "true",
+        "generateNewUnitTests": "false",
+        "passUnitTests": "true"
+      }
+    }
+  ],
+  "metadata": {
+    "planName": "modernizationplan-latest",
+    "projectName": "eShopOnWeb",
+    "language": "dotnet",
+    "createdAt": "2026-06-17T17:34:28Z",
+    "version": "1.0"
+  }
+}
