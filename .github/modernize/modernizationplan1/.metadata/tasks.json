@@ -1,0 +1,97 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Tasks template for modernization plan. Generate this file alongside plan.md to track individual migration tasks.",
+  "tasks": [
+    {
+      "type": "transform",
+      "id": "001-transform-externalize-application-configuration",
+      "description": "Externalize application configuration and endpoint settings for Azure-hosted deployments.",
+      "reason": "The solution uses local appsettings values, launch-profile settings, and hardcoded URL assumptions that increase environment drift when moving to Azure.",
+      "requirements": "Move non-secret configuration used by Web, PublicApi, and BlazorAdmin from repository-local settings into Azure-hosted configuration inputs while preserving the existing IConfiguration and IOptions shapes. Remove deploy-time dependence on localhost-style base URLs and keep environment-specific values configurable without code changes. Addresses issues: Hardcoded URLs detected, configuration values stored in appsettings and launch profiles.",
+      "dependencies": [],
+      "skills": [
+        {
+          "name": "migration-local-appsettings-azure-app-configuration-via-deployment",
+          "location": "builtin"
+        }
+      ],
+      "successCriteria": {
+        "passBuild": "true",
+        "generateNewUnitTests": "false",
+        "passUnitTests": "true"
+      }
+    },
+    {
+      "type": "transform",
+      "id": "002-transform-modernize-data-and-secret-access",
+      "description": "Align database connectivity and secret handling with Azure-managed services.",
+      "reason": "The repository mixes local SQL connection settings, source-controlled authentication constants, and a partially Azure-aware production path that should be unified for cloud deployment.",
+      "requirements": "Modernize Web and PublicApi so Azure-hosted environments use externally supplied secrets and managed identity for Azure resource access while preserving current runtime behavior. Keep the application compatible with Azure SQL and the repository's existing Key Vault-based production model, and replace hardcoded authentication secrets or credential-dependent configuration with Azure-managed values. Addresses issues: Hardcoded sensitive data detected, cloud SQL connection configuration, authentication secret handling.",
+      "dependencies": [
+        "001-transform-externalize-application-configuration"
+      ],
+      "skills": [
+        {
+          "name": "migration-managed-identity",
+          "location": "builtin"
+        },
+        {
+          "name": "migration-azure-sql-database",
+          "location": "builtin"
+        },
+        {
+          "name": "migration-azure-keyvault-secret",
+          "location": "builtin"
+        }
+      ],
+      "successCriteria": {
+        "passBuild": "true",
+        "generateNewUnitTests": "false",
+        "passUnitTests": "true"
+      }
+    },
+    {
+      "type": "security",
+      "id": "003-security-remediate-cves",
+      "description": "Scan project dependencies for known CVEs and remediate discovered vulnerabilities before deployment.",
+      "reason": "The assessment surfaced cloud-readiness security findings and the baseline restore emitted package vulnerability advisories that should be resolved before Azure deployment.",
+      "requirements": "Scan all project dependencies for known CVEs and remediate any identified vulnerabilities to the minimum patched version. Document any remediation that requires a major version upgrade, including the affected dependency and breaking-change risk. Include remaining cloud-readiness security findings tied to hardcoded credentials or secrets in the remediation scope, and verify the project builds and tests after changes. Addresses issues: Hardcoded sensitive data detected, dependency vulnerability warnings for Azure.Identity and System.Text.Json.",
+      "environmentConfiguration": "Runtime environment established by prior migration tasks and the repository's existing dotnet/MSBuild workflow.",
+      "dependencies": [
+        "001-transform-externalize-application-configuration",
+        "002-transform-modernize-data-and-secret-access"
+      ],
+      "successCriteria": {
+        "passBuild": "true",
+        "generateNewUnitTests": "false",
+        "passUnitTests": "true"
+      }
+    },
+    {
+      "type": "deployment",
+      "id": "004-deployment-azure-app-service",
+      "description": "Deploy the modernized eShopOnWeb application through the repository's Azure App Service workflow.",
+      "reason": "The repository already includes Azure Developer CLI and Bicep assets for App Service, Azure SQL, and Key Vault, so the modernization plan should finish by using that supported deployment path.",
+      "requirements": "Deploy the Web application and supporting Azure-backed configuration through the repository's existing Azure Developer CLI and Bicep assets. Preserve managed identity access to Key Vault, environment-based configuration injection, HTTPS-only hosting, and connectivity to the configured Azure SQL resources. Validate that the deployed application starts successfully and can reach its configured backend services.",
+      "dependencies": [
+        "003-security-remediate-cves"
+      ],
+      "skills": [
+        {
+          "name": "azcli-appservice-deploy",
+          "location": "builtin"
+        }
+      ],
+      "targetAzureService": "Azure App Service",
+      "resourceStatus": "Use the repository-provided azd and Bicep assets to create or update the required Azure resources.",
+      "deploymentTool": "bicep"
+    }
+  ],
+  "metadata": {
+    "planName": "modernizationplan1",
+    "projectName": "eShopOnWeb",
+    "language": "dotnet",
+    "createdAt": "2026-06-17T17:16:50.164+00:00",
+    "version": "1.0"
+  }
+}
