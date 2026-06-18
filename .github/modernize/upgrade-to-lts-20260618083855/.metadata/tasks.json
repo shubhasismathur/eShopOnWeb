@@ -14,7 +14,13 @@
         "generateNewUnitTests": "false",
         "passUnitTests": "true"
       },
-      "status": "started"
+      "status": "success",
+      "taskSummary": "Upgraded eShopOnWeb to .NET 10 by updating the SDK, target framework, package/workflow compatibility, and required build/test compatibility fixes; full solution build and tests passed on net10.0.",
+      "successCriteriaStatus": {
+        "passBuild": "true",
+        "generateNewUnitTests": "false",
+        "passUnitTests": "true"
+      }
     }
   ],
   "metadata": {
