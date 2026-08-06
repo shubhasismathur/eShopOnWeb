@@ -1,0 +1,62 @@
+{
+  "GeneratedAt": "2026-08-06T11:26:42.0000000Z",
+  "ProjectPath": ".",
+  "Summary": {
+    "TotalFindings": 3,
+    "CveCount": 0,
+    "CweCount": 3,
+    "BySeverity": {
+      "mandatory": 0,
+      "optional": 2,
+      "potential": 1
+    },
+    "ByCategory": {
+      "Credentials & Secrets": 3
+    },
+    "TotalRulesAssessed": 59,
+    "RulesPassed": 56
+  },
+  "CveFindings": [],
+  "CweFindings": [
+    {
+      "Id": "CWE-259",
+      "Name": "Use of Hard-coded Password",
+      "Category": "Credentials & Secrets",
+      "Severity": "optional",
+      "StoryPoint": 5,
+      "Description": "The product contains a hard-coded password, which it uses for its own inbound authentication or for outbound communication to external components.",
+      "Files": [
+        "src/ApplicationCore/Constants/AuthorizationConstants.cs:8",
+        "src/Infrastructure/Identity/AppIdentityDbContextSeed.cs:21"
+      ],
+      "Explanation": "A hard-coded default password constant is used to create seeded users in AppIdentityDbContextSeed, exposing static credential material."
+    },
+    {
+      "Id": "CWE-321",
+      "Name": "Use of Hard-coded Cryptographic Key",
+      "Category": "Credentials & Secrets",
+      "Severity": "potential",
+      "StoryPoint": 5,
+      "Description": "The product uses a hard-coded, unchangeable cryptographic key.",
+      "Files": [
+        "src/ApplicationCore/Constants/AuthorizationConstants.cs:11",
+        "src/PublicApi/Program.cs:54"
+      ],
+      "Explanation": "JWT signing key is hard-coded in AuthorizationConstants and consumed directly in PublicApi JWT configuration."
+    },
+    {
+      "Id": "CWE-798",
+      "Name": "Use of Hard-coded Credentials",
+      "Category": "Credentials & Secrets",
+      "Severity": "optional",
+      "StoryPoint": 5,
+      "Description": "The product contains hard-coded credentials, such as a password or cryptographic key.",
+      "Files": [
+        "src/ApplicationCore/Constants/AuthorizationConstants.cs:5",
+        "src/ApplicationCore/Constants/AuthorizationConstants.cs:8",
+        "src/ApplicationCore/Constants/AuthorizationConstants.cs:11"
+      ],
+      "Explanation": "Authentication-related constants include hard-coded auth key, password, and JWT secret key credentials in source."
+    }
+  ]
+}
