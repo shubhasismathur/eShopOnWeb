@@ -4517,5 +4517,211 @@
       ],
       "labels": []
     }
-  }
+  },
+  "security": [
+    {
+      "id": "CVE-2026-32933",
+      "title": "AutoMapper Vulnerable to Denial of Service (DoS) via Uncontrolled Recursion",
+      "category": "CVE",
+      "severity": "mandatory",
+      "description": "[CVE-2026-32933](https://github.com/advisories/GHSA-rvv3-g6hj-g44x): AutoMapper Vulnerable to Denial of Service (DoS) via Uncontrolled Recursion\n\nSeverity: HIGH\n\nAffected dependencies:\n  - AutoMapper@12.0.1 (declared at Directory.Packages.props)\n  - AutoMapper@12.0.1 (declared at Directory.Packages.props)\n\nVulnerable version range: < 15.1.1\nRecommended fix: Upgrade to patched version 15.1.1 or later",
+      "evidence": {
+        "files": [
+          "Directory.Packages.props"
+        ],
+        "explanation": "[CVE-2026-32933](https://github.com/advisories/GHSA-rvv3-g6hj-g44x): AutoMapper Vulnerable to Denial of Service (DoS) via Uncontrolled Recursion\n\nSeverity: HIGH\n\nAffected dependencies:\n  - AutoMapper@12.0.1 (declared at Directory.Packages.props)\n  - AutoMapper@12.0.1 (declared at Directory.Packages.props)\n\nVulnerable version range: < 15.1.1\nRecommended fix: Upgrade to patched version 15.1.1 or later"
+      },
+      "storyPoint": 1
+    },
+    {
+      "id": "CVE-2024-43483",
+      "title": "Microsoft Security Advisory CVE-2024-43483 | .NET Denial of Service Vulnerability",
+      "category": "CVE",
+      "severity": "mandatory",
+      "description": "[CVE-2024-43483](https://github.com/advisories/GHSA-qj66-m88j-hmgj): Microsoft Security Advisory CVE-2024-43483 | .NET Denial of Service Vulnerability\n\nSeverity: HIGH\n\nAffected dependencies:\n  - Microsoft.Extensions.Caching.Memory@8.0.0 (declared at Directory.Packages.props)\n  - Microsoft.Extensions.Caching.Memory@8.0.0 (declared at Directory.Packages.props)\n  - Microsoft.Extensions.Caching.Memory@8.0.0 (declared at Directory.Packages.props)\n\nVulnerable version range: >= 6.0.0-preview.1.21102.12, <= 6.0.1\nRecommended fix: Upgrade to patched version 6.0.2 or later",
+      "evidence": {
+        "files": [
+          "Directory.Packages.props"
+        ],
+        "explanation": "[CVE-2024-43483](https://github.com/advisories/GHSA-qj66-m88j-hmgj): Microsoft Security Advisory CVE-2024-43483 | .NET Denial of Service Vulnerability\n\nSeverity: HIGH\n\nAffected dependencies:\n  - Microsoft.Extensions.Caching.Memory@8.0.0 (declared at Directory.Packages.props)\n  - Microsoft.Extensions.Caching.Memory@8.0.0 (declared at Directory.Packages.props)\n  - Microsoft.Extensions.Caching.Memory@8.0.0 (declared at Directory.Packages.props)\n\nVulnerable version range: >= 6.0.0-preview.1.21102.12, <= 6.0.1\nRecommended fix: Upgrade to patched version 6.0.2 or later"
+      },
+      "storyPoint": 1
+    },
+    {
+      "id": "CVE-2024-0057",
+      "title": "NuGet Client Security Feature Bypass Vulnerability ",
+      "category": "CVE",
+      "severity": "mandatory",
+      "description": "[CVE-2024-0057](https://github.com/advisories/GHSA-68w7-72jg-6qpp): NuGet Client Security Feature Bypass Vulnerability \n\nSeverity: CRITICAL\n\nAffected dependencies:\n  - NuGet.Packaging@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Packaging@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Packaging@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Packaging@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Packaging@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Packaging@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Packaging@6.3.1 (declared at Directory.Packages.props)\n\nVulnerable version range: = 6.8.0\nRecommended fix: Upgrade to patched version 6.8.1 or later",
+      "evidence": {
+        "files": [
+          "Directory.Packages.props"
+        ],
+        "explanation": "[CVE-2024-0057](https://github.com/advisories/GHSA-68w7-72jg-6qpp): NuGet Client Security Feature Bypass Vulnerability \n\nSeverity: CRITICAL\n\nAffected dependencies:\n  - NuGet.Packaging@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Packaging@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Packaging@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Packaging@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Packaging@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Packaging@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Packaging@6.3.1 (declared at Directory.Packages.props)\n\nVulnerable version range: = 6.8.0\nRecommended fix: Upgrade to patched version 6.8.1 or later"
+      },
+      "storyPoint": 1
+    },
+    {
+      "id": "CVE-2023-29337",
+      "title": "NuGet Client Remote Code Execution Vulnerability",
+      "category": "CVE",
+      "severity": "mandatory",
+      "description": "[CVE-2023-29337](https://github.com/advisories/GHSA-6qmf-mmc7-6c2p): NuGet Client Remote Code Execution Vulnerability\n\nSeverity: HIGH\n\nAffected dependencies:\n  - NuGet.Common@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Common@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Common@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Common@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Common@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Protocol@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Protocol@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Protocol@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Protocol@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Protocol@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Common@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Protocol@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Common@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Protocol@6.3.1 (declared at Directory.Packages.props)\n\nVulnerable version range: >= 4.7.0, < 5.11.5\nRecommended fix: Upgrade to patched version 5.11.5 or later",
+      "evidence": {
+        "files": [
+          "Directory.Packages.props"
+        ],
+        "explanation": "[CVE-2023-29337](https://github.com/advisories/GHSA-6qmf-mmc7-6c2p): NuGet Client Remote Code Execution Vulnerability\n\nSeverity: HIGH\n\nAffected dependencies:\n  - NuGet.Common@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Common@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Common@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Common@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Common@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Protocol@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Protocol@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Protocol@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Protocol@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Protocol@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Common@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Protocol@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Common@6.3.1 (declared at Directory.Packages.props)\n  - NuGet.Protocol@6.3.1 (declared at Directory.Packages.props)\n\nVulnerable version range: >= 4.7.0, < 5.11.5\nRecommended fix: Upgrade to patched version 5.11.5 or later"
+      },
+      "storyPoint": 1
+    },
+    {
+      "id": "CVE-2024-38095",
+      "title": "Microsoft Security Advisory CVE-2024-38095 | .NET Denial of Service Vulnerability",
+      "category": "CVE",
+      "severity": "mandatory",
+      "description": "[CVE-2024-38095](https://github.com/advisories/GHSA-447r-wph3-92pm): Microsoft Security Advisory CVE-2024-38095 | .NET Denial of Service Vulnerability\n\nSeverity: HIGH\n\nAffected dependencies:\n  - System.Formats.Asn1@5.0.0 (declared at Directory.Packages.props)\n  - System.Formats.Asn1@5.0.0 (declared at Directory.Packages.props)\n\nVulnerable version range: >= 7.0.0-preview.1.22076.8, < 8.0.1\nRecommended fix: Upgrade to patched version 8.0.1 or later",
+      "evidence": {
+        "files": [
+          "Directory.Packages.props"
+        ],
+        "explanation": "[CVE-2024-38095](https://github.com/advisories/GHSA-447r-wph3-92pm): Microsoft Security Advisory CVE-2024-38095 | .NET Denial of Service Vulnerability\n\nSeverity: HIGH\n\nAffected dependencies:\n  - System.Formats.Asn1@5.0.0 (declared at Directory.Packages.props)\n  - System.Formats.Asn1@5.0.0 (declared at Directory.Packages.props)\n\nVulnerable version range: >= 7.0.0-preview.1.22076.8, < 8.0.1\nRecommended fix: Upgrade to patched version 8.0.1 or later"
+      },
+      "storyPoint": 1
+    },
+    {
+      "id": "CVE-2024-43485",
+      "title": "Microsoft Security Advisory CVE-2024-43485 | .NET Denial of Service Vulnerability",
+      "category": "CVE",
+      "severity": "mandatory",
+      "description": "[CVE-2024-43485](https://github.com/advisories/GHSA-8g4q-xg66-9fp4): Microsoft Security Advisory CVE-2024-43485 | .NET Denial of Service Vulnerability\n\nSeverity: HIGH\n\nAffected dependencies:\n  - System.Text.Json@8.0.3 (declared at Directory.Packages.props)\n  - System.Text.Json@8.0.3 (declared at Directory.Packages.props)\n\nVulnerable version range: >= 6.0.0, <= 6.0.9\nRecommended fix: Upgrade to patched version 6.0.10 or later",
+      "evidence": {
+        "files": [
+          "Directory.Packages.props"
+        ],
+        "explanation": "[CVE-2024-43485](https://github.com/advisories/GHSA-8g4q-xg66-9fp4): Microsoft Security Advisory CVE-2024-43485 | .NET Denial of Service Vulnerability\n\nSeverity: HIGH\n\nAffected dependencies:\n  - System.Text.Json@8.0.3 (declared at Directory.Packages.props)\n  - System.Text.Json@8.0.3 (declared at Directory.Packages.props)\n\nVulnerable version range: >= 6.0.0, <= 6.0.9\nRecommended fix: Upgrade to patched version 6.0.10 or later"
+      },
+      "storyPoint": 1
+    },
+    {
+      "id": "CVE-2024-30105",
+      "title": "Microsoft Security Advisory CVE-2024-30105 | .NET Denial of Service Vulnerability",
+      "category": "CVE",
+      "severity": "mandatory",
+      "description": "[CVE-2024-30105](https://github.com/advisories/GHSA-hh2w-p6rv-4g7w): Microsoft Security Advisory CVE-2024-30105 | .NET Denial of Service Vulnerability\n\nSeverity: HIGH\n\nAffected dependencies:\n  - System.Text.Json@8.0.3 (declared at Directory.Packages.props)\n\nVulnerable version range: >= 7.0.0, < 8.0.4\nRecommended fix: Upgrade to patched version 8.0.4 or later",
+      "evidence": {
+        "files": [
+          "Directory.Packages.props"
+        ],
+        "explanation": "[CVE-2024-30105](https://github.com/advisories/GHSA-hh2w-p6rv-4g7w): Microsoft Security Advisory CVE-2024-30105 | .NET Denial of Service Vulnerability\n\nSeverity: HIGH\n\nAffected dependencies:\n  - System.Text.Json@8.0.3 (declared at Directory.Packages.props)\n\nVulnerable version range: >= 7.0.0, < 8.0.4\nRecommended fix: Upgrade to patched version 8.0.4 or later"
+      },
+      "storyPoint": 1
+    },
+    {
+      "id": "CWE-772",
+      "title": "Missing Release of Resource after Effective Lifetime",
+      "category": "Code Quality",
+      "severity": "potential",
+      "description": "The product does not release a resource after its effective lifetime has ended, i.e., after the resource is no longer needed.",
+      "evidence": {
+        "files": [
+          "src/Web/HealthChecks/ApiHealthCheck.cs"
+        ],
+        "explanation": "In ApiHealthCheck.CheckHealthAsync(), a new HttpClient instance is created with 'var client = new HttpClient()' but is never disposed. HttpClient implements IDisposable, and creating a new instance per health check call without disposal leads to socket exhaustion over time. The instance should be wrapped in a 'using' block or, preferably, injected via IHttpClientFactory."
+      },
+      "storyPoint": 3
+    },
+    {
+      "id": "CWE-775",
+      "title": "Missing Release of File Descriptor or Handle after Effective Lifetime",
+      "category": "Code Quality",
+      "severity": "potential",
+      "description": "The product does not release a file descriptor or handle after its effective lifetime has ended, i.e., after the file descriptor/handle is no longer needed.",
+      "evidence": {
+        "files": [
+          "src/Web/HealthChecks/ApiHealthCheck.cs"
+        ],
+        "explanation": "Same as CWE-772: the undisposed HttpClient in ApiHealthCheck.CheckHealthAsync() holds a socket/handle that is never released. Each health check invocation leaks a socket handle, which under high-frequency health check polling can exhaust available socket descriptors."
+      },
+      "storyPoint": 3
+    },
+    {
+      "id": "CWE-259",
+      "title": "Use of Hard-coded Password",
+      "category": "Credentials & Secrets",
+      "severity": "optional",
+      "description": "The product contains a hard-coded password, which it uses for its own inbound authentication or for outbound communication to external components.",
+      "evidence": {
+        "files": [
+          "src/ApplicationCore/Constants/AuthorizationConstants.cs",
+          "docker-compose.yml"
+        ],
+        "explanation": "AuthorizationConstants.cs contains 'public const string DEFAULT_PASSWORD = \"Pass@word1\"' (with a TODO comment acknowledging this is not for production). This password is used as the seed default password for admin/demo users in AppIdentityDbContextSeed. Additionally, docker-compose.yml hard-codes 'SA_PASSWORD=@someThingComplicated1234' as the SQL Server SA account password."
+      },
+      "storyPoint": 5
+    },
+    {
+      "id": "CWE-321",
+      "title": "Use of Hard-coded Cryptographic Key",
+      "category": "Credentials & Secrets",
+      "severity": "potential",
+      "description": "The product uses a hard-coded, unchangeable cryptographic key.",
+      "evidence": {
+        "files": [
+          "src/ApplicationCore/Constants/AuthorizationConstants.cs",
+          "src/Infrastructure/Identity/IdentityTokenClaimService.cs"
+        ],
+        "explanation": "AuthorizationConstants.JWT_SECRET_KEY is set to the literal string 'SecretKeyOfDoomThatMustBeAMinimumNumberOfBytes' (with a TODO comment: 'Change this to an environment variable'). IdentityTokenClaimService.GetTokenAsync() converts this constant to bytes via Encoding.ASCII.GetBytes(AuthorizationConstants.JWT_SECRET_KEY) and uses it as the HMAC-SHA256 signing key for all issued JWT tokens. A well-known, static signing key allows any party with knowledge of the source code to forge valid JWT tokens."
+      },
+      "storyPoint": 5
+    },
+    {
+      "id": "CWE-778",
+      "title": "Insufficient Logging",
+      "category": "Credentials & Secrets",
+      "severity": "potential",
+      "description": "When a security-critical event occurs, the product either does not record the event or omits important details about the event when logging it.",
+      "evidence": {
+        "files": [
+          "src/PublicApi/AuthEndpoints/AuthenticateEndpoint.cs"
+        ],
+        "explanation": "AuthenticateEndpoint.HandleAsync() processes login requests and sets response.IsLockedOut, response.IsNotAllowed, and response.RequiresTwoFactor flags but does not log any of these security-relevant failure conditions. Failed authentication attempts, account lockouts, and two-factor redirects occur silently with no audit trail in the application logs, making it impossible to detect brute-force or credential-stuffing attacks from logs alone."
+      },
+      "storyPoint": 3
+    },
+    {
+      "id": "CWE-798",
+      "title": "Use of Hard-coded Credentials",
+      "category": "Credentials & Secrets",
+      "severity": "optional",
+      "description": "The product contains hard-coded credentials, such as a password or cryptographic key.",
+      "evidence": {
+        "files": [
+          "src/ApplicationCore/Constants/AuthorizationConstants.cs",
+          "src/ApplicationCore/Constants/AuthorizationConstants.cs",
+          "docker-compose.yml",
+          "src/Web/appsettings.Docker.json",
+          "src/PublicApi/appsettings.Docker.json"
+        ],
+        "explanation": "Multiple hard-coded credentials exist: (1) DEFAULT_PASSWORD='Pass@word1' and JWT_SECRET_KEY='SecretKeyOfDoomThatMustBeAMinimumNumberOfBytes' in AuthorizationConstants.cs; (2) SA_PASSWORD=@someThingComplicated1234 in docker-compose.yml environment section; (3) SQL Server connection strings with SA credentials (User Id=sa;****** committed in appsettings.Docker.json for both Web and PublicApi. All three constants are acknowledged with TODO comments in source but remain in the committed codebase."
+      },
+      "storyPoint": 5
+    },
+    {
+      "id": "CWE-434",
+      "title": "Unrestricted Upload of File with Dangerous Type",
+      "category": "File & Path Security",
+      "severity": "mandatory",
+      "description": "The product allows the upload or transfer of dangerous file types that are automatically processed within its environment.",
+      "evidence": {
+        "files": [
+          "src/PublicApi/ImageValidators.cs",
+          "src/PublicApi/CatalogItemEndpoints/CreateCatalogItemEndpoint.cs",
+          "src/BlazorShared/Models/CatalogItem.cs"
+        ],
+        "explanation": "The CreateCatalogItemEndpoint accepts a Base64-encoded image string (pictureBase64) from the client and writes it to disk via UpdatePictureUri. ImageValidators.IsValidImage checks the file extension and size but does NOT validate actual file content (magic bytes/MIME sniffing). An attacker could submit a malicious file with a .jpg/.png extension that contains executable or script content, bypassing the extension-only check. The validation in src/PublicApi/ImageValidators.cs relies solely on Path.GetExtension(fileName) and a byte-length check, with no content-type or magic byte verification."
+      },
+      "storyPoint": 8
+    }
+  ]
 }
