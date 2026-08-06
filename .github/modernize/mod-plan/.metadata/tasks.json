@@ -1,0 +1,101 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Tasks template for modernization plan. Generate this file alongside plan.md to track individual migration tasks.",
+  "metadata": {
+    "planName": "mod-plan",
+    "projectName": "eShopOnWeb",
+    "language": "dotnet",
+    "createdAt": "2026-08-06T13:29:18.622Z",
+    "version": "1.0"
+  },
+  "tasks": [
+    {
+      "type": "transform",
+      "id": "001-transform-sql-server-to-azure-sql",
+      "description": "Migrate the application's SQL Server database connections to Azure SQL Database using Managed Identity (passwordless) authentication.",
+      "reason": "The application currently uses SQL Server with connection strings that include credentials. Migrating to Azure SQL Database with Managed Identity removes hard-coded credentials and improves security posture for cloud deployment.",
+      "requirements": "Migrate all SQL Server connection strings and EF Core configuration in the Infrastructure and Web projects to use Azure SQL Database with Managed Identity (DefaultAzureCredential). Remove plain-text passwords from connection strings. Ensure Entity Framework Core migrations and seeding continue to work. Authentication method: Managed Identity.",
+      "skills": [
+        {
+          "name": "migration-azure-sql-database",
+          "location": "builtin"
+        }
+      ],
+      "successCriteria": {
+        "passBuild": "true",
+        "passUnitTests": "true"
+      }
+    },
+    {
+      "type": "transform",
+      "id": "002-transform-appsettings-to-azure-app-configuration",
+      "description": "Externalize non-secret application settings from appsettings.json to Azure App Configuration.",
+      "reason": "Centralizing configuration in Azure App Configuration enables environment-specific settings management without redeployment and removes configuration drift across environments.",
+      "requirements": "Move non-secret values from appsettings.json / appsettings.{Environment}.json to Azure App Configuration. Ensure IConfiguration / IOptions<T> shapes are preserved. Emit a .azure/configuration-migration.json seed file for the deployment agent. Authentication method: Managed Identity.",
+      "dependencies": ["001-transform-sql-server-to-azure-sql"],
+      "skills": [
+        {
+          "name": "migration-local-appsettings-azure-app-configuration",
+          "location": "builtin"
+        }
+      ],
+      "successCriteria": {
+        "passBuild": "true",
+        "passUnitTests": "true"
+      }
+    },
+    {
+      "type": "transform",
+      "id": "003-transform-secrets-to-azure-keyvault",
+      "description": "Move sensitive application secrets (e.g., JWT signing keys, API secrets) from appsettings.json to Azure Key Vault.",
+      "reason": "Secrets stored in appsettings.json are a security risk. Azure Key Vault provides secure, auditable secret storage with Managed Identity access.",
+      "requirements": "Identify all secrets currently stored in appsettings.json (JWT secret keys, any API keys or sensitive configuration). Migrate them to Azure Key Vault and update the application to retrieve secrets via Azure Key Vault using Managed Identity (DefaultAzureCredential). The existing Azure.Extensions.AspNetCore.Configuration.Secrets and Azure.Identity packages are already present in the project. Authentication method: Managed Identity.",
+      "dependencies": ["002-transform-appsettings-to-azure-app-configuration"],
+      "skills": [
+        {
+          "name": "migration-azure-keyvault-secret",
+          "location": "builtin"
+        }
+      ],
+      "successCriteria": {
+        "passBuild": "true",
+        "passUnitTests": "true"
+      }
+    },
+    {
+      "type": "security",
+      "id": "004-security-cve-remediation",
+      "description": "Scan all project dependencies for known CVEs and remediate any identified vulnerabilities to ensure the application is secure before deployment.",
+      "reason": "Dependency vulnerabilities must be addressed before deploying to production to prevent exploitable security issues.",
+      "requirements": "Upgrade vulnerable dependencies to the minimum patched version. If a CVE fix requires a major version upgrade, document the affected dependency, the current version, the upgraded major version, and the breaking change risk. Verify that the project builds and all tests pass after remediation.",
+      "dependencies": ["003-transform-secrets-to-azure-keyvault"],
+      "skills": [
+        {
+          "name": "validate-cves-and-fix",
+          "location": "builtin"
+        }
+      ],
+      "successCriteria": {
+        "passBuild": "true",
+        "passUnitTests": "true"
+      }
+    },
+    {
+      "type": "deployment",
+      "id": "005-deployment-azure-container-apps",
+      "description": "Containerize and deploy the eShopOnWeb application to Azure Container Apps.",
+      "reason": "Azure Container Apps provides scalable, managed containerized hosting suitable for the modernized ASP.NET Core application.",
+      "requirements": "Create Dockerfile(s) for the Web and PublicApi projects. Deploy to Azure Container Apps using Managed Identity. Configure environment variables and connection strings via Azure App Configuration and Key Vault references. Use Bicep for any required infrastructure provisioning.",
+      "dependencies": ["004-security-cve-remediation"],
+      "targetAzureService": "azurecontainerapp",
+      "resourceStatus": "Create new Azure Container Apps environment and apps",
+      "deploymentTool": "bicep",
+      "skills": [
+        {
+          "name": "azcli-containerapp-deploy",
+          "location": "builtin"
+        }
+      ]
+    }
+  ]
+}
