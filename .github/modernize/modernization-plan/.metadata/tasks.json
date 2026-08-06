@@ -1,0 +1,132 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "description": "Tasks template for modernization plan. Generate this file alongside plan.md to track individual migration tasks.",
+  "tasks": [
+    {
+      "type": "upgrade",
+      "id": "001-upgrade-dotnet",
+      "description": "Upgrade the entire eShopOnWeb solution from .NET 8 to .NET 10 (latest LTS)",
+      "reason": ".NET 8 is approaching end of mainstream support. Upgrading to .NET 10 (latest LTS) ensures long-term support, access to the latest performance improvements, and compatibility with current Azure SDK packages.",
+      "requirements": "Upgrade all projects in the solution (ApplicationCore, BlazorAdmin, BlazorShared, Infrastructure, PublicApi, Web) from net8.0 to net10.0. Update all package references to versions compatible with .NET 10. Update global.json SDK version. Ensure the solution builds and all unit tests pass after the upgrade.",
+      "successCriteria": {
+        "passBuild": "true",
+        "passUnitTests": "true"
+      }
+    },
+    {
+      "type": "transform",
+      "id": "002-transform-sql-to-azure-sql",
+      "description": "Migrate the application's SQL Server database usage to Azure SQL Database with Managed Identity authentication",
+      "reason": "Moving to Azure SQL Database eliminates the need for SQL Server passwords in connection strings and provides a fully-managed, scalable cloud database service. Managed Identity authentication improves security by removing credentials from configuration.",
+      "requirements": "Update all database connection configurations in Web and PublicApi projects to target Azure SQL Database. Replace password-based connection strings with Managed Identity (DefaultAzureCredential / passwordless) authentication. Update Entity Framework Core configuration as needed. Ensure all database operations (catalog, identity) continue to work correctly.",
+      "dependencies": ["001-upgrade-dotnet"],
+      "skills": [
+        {
+          "name": "migration-azure-sql-database",
+          "location": "builtin"
+        }
+      ],
+      "successCriteria": {
+        "passBuild": "true",
+        "passUnitTests": "true"
+      }
+    },
+    {
+      "type": "transform",
+      "id": "003-transform-secrets-to-keyvault",
+      "description": "Migrate application secrets (JWT signing keys, sensitive connection strings) from local configuration to Azure Key Vault",
+      "reason": "Storing secrets in appsettings.json or environment variables is a security risk. Azure Key Vault provides centralized, auditable, and access-controlled secret storage. Managed Identity removes the need for Key Vault access credentials.",
+      "requirements": "Identify all secrets currently stored in appsettings.json or environment variables across Web and PublicApi projects (e.g., JWT signing keys, any remaining credentials). Configure the applications to retrieve those secrets from Azure Key Vault at startup using Managed Identity (DefaultAzureCredential). Ensure backward compatibility so the application still functions locally using development fallbacks.",
+      "dependencies": ["002-transform-sql-to-azure-sql"],
+      "skills": [
+        {
+          "name": "migration-azure-keyvault-secret",
+          "location": "builtin"
+        }
+      ],
+      "successCriteria": {
+        "passBuild": "true",
+        "passUnitTests": "true"
+      }
+    },
+    {
+      "type": "transform",
+      "id": "004-transform-appsettings-to-app-configuration",
+      "description": "Externalize non-secret application settings from appsettings.json to Azure App Configuration",
+      "reason": "Azure App Configuration provides centralized, dynamic configuration management for cloud applications, enabling runtime configuration updates without redeployment and separating configuration concerns from code.",
+      "requirements": "Move non-secret settings from appsettings.json / appsettings.{Environment}.json in the Web and PublicApi projects to Azure App Configuration. Configure the applications to load settings from Azure App Configuration using Managed Identity (DefaultAzureCredential). Generate a configuration-migration.json seed file listing all settings to be imported. Preserve the existing IConfiguration / IOptions<T> shape so no consuming code changes are needed.",
+      "dependencies": ["003-transform-secrets-to-keyvault"],
+      "skills": [
+        {
+          "name": "migration-local-appsettings-azure-app-configuration",
+          "location": "builtin"
+        }
+      ],
+      "successCriteria": {
+        "passBuild": "true",
+        "passUnitTests": "true"
+      }
+    },
+    {
+      "type": "transform",
+      "id": "005-transform-logging-to-opentelemetry",
+      "description": "Add OpenTelemetry instrumentation with Azure Monitor for distributed tracing, metrics, and structured logging",
+      "reason": "The application currently only outputs logs to the console. Adding OpenTelemetry with Azure Monitor provides distributed tracing, metrics, and structured log aggregation essential for operating a cloud-hosted application.",
+      "requirements": "Add OpenTelemetry SDK with Azure Monitor exporter to the Web and PublicApi projects. Configure traces, metrics, and logs to be exported to Azure Monitor (Application Insights) using Managed Identity. Ensure existing console logging is preserved alongside cloud logging for local development scenarios.",
+      "dependencies": ["004-transform-appsettings-to-app-configuration"],
+      "skills": [
+        {
+          "name": "migration-opentelemetry-azure",
+          "location": "builtin"
+        }
+      ],
+      "successCriteria": {
+        "passBuild": "true",
+        "passUnitTests": "true"
+      }
+    },
+    {
+      "type": "security",
+      "id": "006-security-cve-remediation",
+      "description": "Scan all project dependencies for known CVEs and remediate identified vulnerabilities",
+      "reason": "Ensuring the application is free of known security vulnerabilities before deployment is a mandatory security baseline requirement.",
+      "requirements": "Scan all NuGet packages across the solution for known CVEs. Upgrade vulnerable dependencies to the minimum patched version. If a CVE fix requires a major version upgrade, document the affected package, current version, upgraded version, and breaking change risk. Verify that the project builds and all tests pass after remediation.",
+      "environmentConfiguration": "Runtime: .NET 10 (established by task 001-upgrade-dotnet). Build tool: dotnet CLI.",
+      "dependencies": ["005-transform-logging-to-opentelemetry"],
+      "skills": [
+        {
+          "name": "validate-cves-and-fix",
+          "location": "builtin"
+        }
+      ],
+      "successCriteria": {
+        "passBuild": "true",
+        "passUnitTests": "true"
+      }
+    },
+    {
+      "type": "deployment",
+      "id": "007-deployment-azure-container-apps",
+      "description": "Containerize the Web and PublicApi applications and deploy them to Azure Container Apps",
+      "reason": "Azure Container Apps provides a serverless, scalable hosting environment for containerized ASP.NET Core applications with built-in Managed Identity support, auto-scaling, and reduced operational overhead.",
+      "requirements": "Create Dockerfiles for the Web and PublicApi projects. Build container images and push them to Azure Container Registry. Deploy the containers to Azure Container Apps using Managed Identity for all Azure service connections. Configure environment variables and scaling rules as appropriate for a production workload.",
+      "dependencies": ["006-security-cve-remediation"],
+      "targetAzureService": "azurecontainerapp",
+      "resourceStatus": "New Azure Container Apps environment and apps to be created",
+      "deploymentTool": "bicep",
+      "skills": [
+        {
+          "name": "azcli-containerapp-deploy",
+          "location": "builtin"
+        }
+      ]
+    }
+  ],
+  "metadata": {
+    "planName": "modernization-plan",
+    "projectName": "eShopOnWeb",
+    "language": "dotnet",
+    "createdAt": "2026-08-06T12:23:37Z",
+    "version": "1.0"
+  }
+}
